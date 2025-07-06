@@ -1,4 +1,4 @@
-import ollama from 'ollama/browser';
+import ollama from 'ollama';
 import { z, ZodSchema } from 'zod';
 import {
   QuarantinedResponse,
@@ -241,7 +241,7 @@ Instructions:
         lastError = error instanceof Error ? error : new Error(String(error));
         
         if (attempt < this.config.maxRetries - 1) {
-          await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
+          await new Promise(resolve => globalThis.setTimeout(resolve, 1000 * (attempt + 1)));
         }
       }
     }

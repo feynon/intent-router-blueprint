@@ -8,7 +8,7 @@ import {
   createCustomSecurityPolicy,
   QuarantinedLLM,
   ProvenanceTracker,
-  BrowserMemoryManager,
+  MemoryManager,
   createSecurityTestRunner
 } from '../src/index.js';
 import { z } from 'zod';
@@ -173,7 +173,7 @@ async function demonstrateAdvancedCaMeLUsage() {
   console.log('\n5. Memory Management Demo');
   console.log('-------------------------');
 
-  const memoryManager = new BrowserMemoryManager({
+  const memoryManager = new MemoryManager({
     maxMemoryUsage: 1024 * 1024, // 1MB
     maxValues: 100,
     gcInterval: 5000 // 5 seconds

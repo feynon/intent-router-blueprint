@@ -19,7 +19,7 @@ import { CaMeLSecurityEngine, createBasicSecurityPolicies } from './security-eng
 import { CaMeLInterpreter } from './interpreter';
 import { QuarantinedLLM } from './quarantined-llm';
 import { ProvenanceTracker } from './provenance-tracker';
-import { BrowserMemoryManager } from './memory-manager';
+import { MemoryManager } from './memory-manager';
 import { CaMeLDataFlowGraph } from './data-flow-graph';
 
 export interface CaMeLRouterConfig {
@@ -53,14 +53,14 @@ export interface CaMeLRouterEvents {
 }
 
 export class CaMeLRouter extends Emitter<CaMeLRouterEvents> {
-  private securityEngine: CaMeLSecurityEngine;
-  private interpreter: CaMeLInterpreter;
-  private quarantinedLLM: QuarantinedLLM;
+  private securityEngine!: CaMeLSecurityEngine;
+  private interpreter!: CaMeLInterpreter;
+  private quarantinedLLM!: QuarantinedLLM;
   private provenanceTracker?: ProvenanceTracker;
-  private memoryManager: BrowserMemoryManager;
-  private dataFlowGraph: CaMeLDataFlowGraph;
+  private memoryManager!: MemoryManager;
+  private dataFlowGraph!: CaMeLDataFlowGraph;
   private config: CaMeLRouterConfig;
-  private unternetInterpreter: Interpreter;
+  private unternetInterpreter!: Interpreter;
 
   constructor(config: CaMeLRouterConfig) {
     super();
@@ -224,7 +224,7 @@ export class CaMeLRouter extends Emitter<CaMeLRouterEvents> {
       model: this.config.plannerModel.model
     });
 
-    this.memoryManager = new BrowserMemoryManager(this.config.memoryConfig);
+    this.memoryManager = new MemoryManager(this.config.memoryConfig);
 
     if (this.config.enableProvenance !== false) {
       this.provenanceTracker = new ProvenanceTracker();

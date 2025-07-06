@@ -1,7 +1,7 @@
 {
   "name": "intent-router-blueprint",
   "version": "0.1.0",
-  "description": "A dual-LLM intent routing system following the CAMEL security architecture",
+  "description": "A WinterTC-compliant dual-LLM intent routing system following the CAMEL security architecture",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
@@ -12,7 +12,7 @@
     "lint": "eslint src --ext .ts,.tsx",
     "format": "prettier --write src"
   },
-  "keywords": ["intent-router", "llm", "camel", "security", "prompt-injection"],
+  "keywords": ["intent-router", "llm", "camel", "security", "prompt-injection", "wintertc", "cross-platform"],
   "author": "Intent Router Blueprint",
   "license": "MIT",
   "dependencies": {

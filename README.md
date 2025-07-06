@@ -2,11 +2,11 @@
 
 ⚠️ **DISCLAIMER**: This is experimental research software in active development - may not function correctly and is not suitable for production use.
 
-A dual-LLM intent routing system for secure agent orchestration.
+A hybrid LLM intent routing system for secure agent orchestration that operates seamlessly.
 
 ## Overview
 
-This package extends the **Unternet Kernel** to implement a secure intent routing system that separates planning from execution to prevent prompt injection attacks. It integrates the **CAMEL security model** from the DeepMind paper ["Defeating Prompt Injections by Design"](https://arxiv.org/abs/2503.18813) into the Unternet framework, providing a production-ready dual-LLM architecture for secure agent orchestration.
+This package extends the **Unternet Kernel** to implement a secure intent routing system that separates planning from execution to prevent prompt injection attacks. It integrates the **CAMEL security model** from the Google DeepMind paper ["Defeating Prompt Injections by Design"](https://arxiv.org/abs/2503.18813) into the Unternet framework, providing a dual-LLM architecture for secure agent orchestration. The system is fully **WinterTC-compliant**, ensuring unified operation across both browser and Node.js environments.
 
 ### Key Principles
 
@@ -14,11 +14,39 @@ This package extends the **Unternet Kernel** to implement a secure intent routin
 - **Local privacy**: User data stays local during planning
 - **Structured execution**: Only sanitized plans reach the executor
 - **Capability-based security**: Fine-grained control over data flows
+- **WinterTC compliance**: Universal compatibility across browser and Node.js environments
 
 ## Architecture
 
 - **Planner LLM**: Runs locally via Ollama (qwen2.5:4b) - generates secure execution plans
 - **Executor LLM**: Runs remotely via OpenAI-compatible API - executes structured plans without raw user input
+- **Memory Manager**: WinterTC-compliant memory management that works in both environments
+- **Cross-platform APIs**: Uses globalThis for timers, workers, and other environment-specific features
+
+## WinterTC Compliance
+
+This toolkit is fully **WinterTC-compliant**, ensuring it operates seamlessly in both browser and Node.js environments. The following changes have been made to achieve cross-platform compatibility:
+
+### Cross-Platform APIs Used
+- `globalThis.setInterval()` / `globalThis.clearInterval()` - Universal timer APIs
+- `globalThis.setTimeout()` - Universal timeout API
+- `globalThis.TextEncoder()` - Universal text encoding
+- `globalThis.Worker` - Universal worker support (where available)
+- `globalThis.Blob` - Universal blob API
+- `globalThis.URL` - Universal URL API
+
+### Environment Detection
+The toolkit automatically detects the runtime environment and uses appropriate APIs:
+- **Browser**: Uses Web Workers, DOM APIs, and browser-specific features
+- **Node.js**: Uses Node.js worker_threads, filesystem APIs, and Node.js-specific features
+- **Universal**: Uses WinterTC minimum common API for shared functionality
+
+### Memory Management
+The `MemoryManager` class provides WinterTC-compliant memory management:
+- Cross-platform timer management
+- Universal worker thread support
+- Environment-agnostic text encoding
+- Unified event handling
 
 ## Installation
 
@@ -354,9 +382,13 @@ interface IntentRouterConfig {
 }
 ```
 
-## Interactive Demo
+## Demo Applications
 
-Experience the Intent Router Blueprint in action with our comprehensive Next.js demo:
+The Intent Router Blueprint includes two comprehensive demo applications showcasing cross-platform WinterTC compliance:
+
+### Browser Demo (Next.js)
+
+Experience the Intent Router in a browser environment with our interactive Next.js demo:
 
 ```bash
 cd examples/nextjs-demo
@@ -364,21 +396,34 @@ npm install
 npm run dev
 ```
 
-The demo showcases:
-- ** Interactive Intent Interface**: Natural language input with real-time processing
-- ** Security Visualization**: See execution plans and security assessments
-- ** System Monitoring**: Real-time status of planner and executor models
-- ** Tool Integration**: Explore available tools and their capabilities
-- ** Configuration Options**: Adjust user permissions and trust levels
-
-### Demo Features
-- Pre-built examples for common use cases
-- Plan-only mode to inspect execution plans without running them
-- Security policy demonstrations
+**Features:**
+- Interactive web interface with real-time processing
+- Security visualization and execution plan inspection
+- System monitoring dashboard
 - Multi-provider support (OpenAI, Anthropic, custom endpoints)
-- Real-time error handling and security violation reporting
+- Plan-only mode for safe execution plan review
 
-Visit [examples/nextjs-demo](./examples/nextjs-demo) for detailed setup instructions.
+For detailed setup instructions and features, see [examples/nextjs-demo/README.md](./examples/nextjs-demo/README.md).
+
+### Node.js CLI Demo (React Ink)
+
+Test the Intent Router in a Node.js environment with our React Ink CLI application:
+
+```bash
+cd examples/cli-demo
+npm install
+npm run build
+npm start
+```
+
+**Features:**
+- Interactive command-line interface
+- Real-time WinterTC compliance monitoring
+- Dual-LLM orchestration visualization
+- Security policy demonstrations
+- Cross-platform API status indicators
+
+For installation, usage, and troubleshooting, see [examples/cli-demo/README.md](./examples/cli-demo/README.md).
 
 ## Development
 

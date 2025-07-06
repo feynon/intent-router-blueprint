@@ -1,4 +1,4 @@
-import ollama from 'ollama/browser';
+import ollama from 'ollama';
 import { ExecutionPlan, ExecutionPlanSchema, IntentRouterConfig, UserContext } from './types';
 import { KernelTool } from '@unternet/kernel';
 import { DEFAULT_CORS_CONFIG } from './cors-config';

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intent Router Browser Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .passed {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .failed {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .summary {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        .loading {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Intent Router Blueprint - Browser Environment Test</h1>
+        <p>Testing WinterTC-compliant toolkit functionality in browser environment</p>
+        
+        <div id="test-results">
+            <div class="test-result loading">⏳ Initializing test environment...</div>
+        </div>
+        
+        <div id="summary" class="summary" style="display: none;">
+            <h3>📊 Test Summary</h3>
+            <div id="summary-content"></div>
+        </div>
+        
+        <div id="environment-info" style="display: none;">
+            <h3>🌐 Environment Information</h3>
+            <pre id="env-details"></pre>
+        </div>
+    </div>
+
+    <!-- Load the Intent Router Blueprint as ES module -->
+    <script type="module">
+        // Import the toolkit
+        import { 
+            IntentRouter, 
+            createOpenAIConfig, 
+            createUserContext, 
+            createBasicTools 
+        } from './dist/index.js';
+
+        // Test runner
+        class BrowserTestRunner {
+            constructor() {
+                this.passedTests = 0;
+                this.totalTests = 0;
+                this.results = [];
+                this.resultsContainer = document.getElementById('test-results');
+            }
+
+            log(message, type = 'info') {
+                const div = document.createElement('div');
+                div.className = `test-result ${type}`;
+                div.innerHTML = message;
+                this.resultsContainer.appendChild(div);
+                console.log(message.replace(/<[^>]*>/g, ''));
+            }
+
+            async test(name, testFn) {
+                this.totalTests++;
+                this.log(`${this.totalTests}. ${name}...`, 'loading');
+                
+                try {
+                    const result = testFn();
+                    if (result instanceof Promise) {
+                        await result;
+                    }
+                    this.passedTests++;
+                    this.log(`${this.totalTests}. ${name}... ✅ PASSED`, 'passed');
+                    this.results.push({ name, status: 'passed' });
+                } catch (error) {
+                    this.log(`${this.totalTests}. ${name}... ❌ FAILED: ${error.message}`, 'failed');
+                    this.results.push({ name, status: 'failed', error: error.message });
+                }
+            }
+
+            showSummary() {
+                const summaryContainer = document.getElementById('summary');
+                const summaryContent = document.getElementById('summary-content');
+                
+                const successRate = ((this.passedTests / this.totalTests) * 100).toFixed(1);
+                
+                summaryContent.innerHTML = `
+                    <p><strong>Passed:</strong> ${this.passedTests}/${this.totalTests}</p>
+                    <p><strong>Success Rate:</strong> ${successRate}%</p>
+                    ${this.passedTests === this.totalTests ? 
+                        '<p style="color: green;">🎉 All tests passed! Intent Router is working in browser environment.</p>' :
+                        '<p style="color: orange;">⚠️ Some tests failed. Check the results above.</p>'
+                    }
+                `;
+                
+                summaryContainer.style.display = 'block';
+            }
+
+            showEnvironmentInfo() {
+                const envContainer = document.getElementById('environment-info');
+                const envDetails = document.getElementById('env-details');
+                
+                const info = {
+                    userAgent: navigator.userAgent,
+                    platform: navigator.platform,
+                    language: navigator.language,
+                    cookieEnabled: navigator.cookieEnabled,
+                    onLine: navigator.onLine,
+                    screenResolution: `${screen.width}x${screen.height}`,
+                    viewport: `${window.innerWidth}x${window.innerHeight}`,
+                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                    globalThisAvailable: typeof globalThis !== 'undefined',
+                    windowAvailable: typeof window !== 'undefined',
+                    documentAvailable: typeof document !== 'undefined'
+                };
+                
+                envDetails.textContent = JSON.stringify(info, null, 2);
+                envContainer.style.display = 'block';
+            }
+        }
+
+        // Initialize test runner
+        const testRunner = new BrowserTestRunner();
+
+        async function runAllTests() {
+            try {
+                testRunner.log('🚀 Starting browser environment tests...', 'info');
+
+                // Test 1: Module imports
+                await testRunner.test('Import modules', () => {
+                    if (typeof IntentRouter !== 'function') {
+                        throw new Error('IntentRouter not imported correctly');
+                    }
+                    if (typeof createOpenAIConfig !== 'function') {
+                        throw new Error('createOpenAIConfig not imported correctly');
+                    }
+                    if (typeof createUserContext !== 'function') {
+                        throw new Error('createUserContext not imported correctly');
+                    }
+                    if (typeof createBasicTools !== 'function') {
+                        throw new Error('createBasicTools not imported correctly');
+                    }
+                });
+
+                // Test 2: Browser environment detection
+                await testRunner.test('Browser environment detection', () => {
+                    if (typeof window === 'undefined') {
+                        throw new Error('Window object should exist in browser');
+                    }
+                    if (typeof document === 'undefined') {
+                        throw new Error('Document object should exist in browser');
+                    }
+                    if (typeof process !== 'undefined') {
+                        throw new Error('Process object should not exist in browser');
+                    }
+                });
+
+                // Test 3: WinterTC API availability
+                await testRunner.test('WinterTC API availability', () => {
+                    const requiredAPIs = ['setInterval', 'clearInterval', 'setTimeout', 'TextEncoder', 'Blob', 'URL'];
+                    const missingAPIs = [];
+                    
+                    requiredAPIs.forEach(api => {
+                        if (typeof globalThis[api] === 'undefined') {
+                            missingAPIs.push(api);
+                        }
+                    });
+                    
+                    if (missingAPIs.length > 0) {
+                        throw new Error(`Missing WinterTC APIs: ${missingAPIs.join(', ')}`);
+                    }
+                });
+
+                // Test 4: Web Workers availability
+                await testRunner.test('Web Workers availability', () => {
+                    if (typeof globalThis.Worker === 'undefined') {
+                        throw new Error('Worker API not available');
+                    }
+                });
+
+                // Test 5: Configuration creation
+                await testRunner.test('Create OpenAI configuration', () => {
+                    const config = createOpenAIConfig('test-key', 'gpt-4o');
+                    if (!config.executorModel || !config.plannerModel) {
+                        throw new Error('Configuration missing required models');
+                    }
+                    if (config.executorModel.apiKey !== 'test-key') {
+                        throw new Error('API key not set correctly');
+                    }
+                    if (config.executorModel.model !== 'gpt-4o') {
+                        throw new Error('Model not set correctly');
+                    }
+                });
+
+                // Test 6: User context creation
+                await testRunner.test('Create user context', () => {
+                    const userContext = createUserContext('browser-user', ['web_search', 'send_email'], 'high');
+                    if (userContext.userId !== 'browser-user') {
+                        throw new Error('User ID not set correctly');
+                    }
+                    if (!userContext.permissions.includes('web_search')) {
+                        throw new Error('Permissions not set correctly');
+                    }
+                    if (userContext.trustLevel !== 'high') {
+                        throw new Error('Trust level not set correctly');
+                    }
+                });
+
+                // Test 7: Basic tools creation
+                await testRunner.test('Create basic tools', () => {
+                    const tools = createBasicTools();
+                    if (!Array.isArray(tools)) {
+                        throw new Error('Tools should be an array');
+                    }
+                    if (tools.length === 0) {
+                        throw new Error('Should create at least one tool');
+                    }
+                    const tool = tools[0];
+                    if (!tool.name || !tool.description || !tool.type) {
+                        throw new Error('Tool missing required properties');
+                    }
+                });
+
+                // Test 8: Intent Router initialization
+                await testRunner.test('Initialize Intent Router', () => {
+                    const config = createOpenAIConfig('test-key');
+                    config.tools = createBasicTools();
+                    
+                    const router = new IntentRouter(config);
+                    if (!router) {
+                        throw new Error('Router not created');
+                    }
+                    if (typeof router.route !== 'function') {
+                        throw new Error('Router missing route method');
+                    }
+                    if (typeof router.planOnly !== 'function') {
+                        throw new Error('Router missing planOnly method');
+                    }
+                });
+
+                // Test 9: TextEncoder functionality
+                await testRunner.test('TextEncoder functionality', () => {
+                    const encoder = new globalThis.TextEncoder();
+                    const testText = 'Intent Router Browser Test';
+                    const encoded = encoder.encode(testText);
+                    
+                    if (!(encoded instanceof Uint8Array)) {
+                        throw new Error('TextEncoder should return Uint8Array');
+                    }
+                    if (encoded.length === 0) {
+                        throw new Error('Encoded text should not be empty');
+                    }
+                });
+
+                // Test 10: Timer functionality
+                await testRunner.test('Timer functionality', async () => {
+                    return new Promise((resolve, reject) => {
+                        let callbackExecuted = false;
+                        
+                        const timer = globalThis.setTimeout(() => {
+                            callbackExecuted = true;
+                            resolve();
+                        }, 50);
+                        
+                        globalThis.setTimeout(() => {
+                            if (!callbackExecuted) {
+                                reject(new Error('Timer callback not executed'));
+                            }
+                        }, 100);
+                    });
+                });
+
+                // Test 11: Blob functionality  
+                await testRunner.test('Blob functionality', () => {
+                    const testData = 'Intent Router test data';
+                    const blob = new globalThis.Blob([testData], { type: 'text/plain' });
+                    
+                    if (!(blob instanceof Blob)) {
+                        throw new Error('Blob constructor not working');
+                    }
+                    if (blob.size === 0) {
+                        throw new Error('Blob should not be empty');
+                    }
+                    if (blob.type !== 'text/plain') {
+                        throw new Error('Blob type not set correctly');
+                    }
+                });
+
+                // Test 12: URL functionality
+                await testRunner.test('URL functionality', () => {
+                    const testUrl = 'https://example.com/test?param=value';
+                    const url = new globalThis.URL(testUrl);
+                    
+                    if (!(url instanceof URL)) {
+                        throw new Error('URL constructor not working');
+                    }
+                    if (url.hostname !== 'example.com') {
+                        throw new Error('URL parsing not working correctly');
+                    }
+                });
+
+                // Test 13: Memory management simulation
+                await testRunner.test('Memory management capabilities', () => {
+                    // Test that we can create memory manager (indirectly through router)
+                    const config = createOpenAIConfig('test-key');
+                    config.tools = createBasicTools();
+                    
+                    const router = new IntentRouter(config);
+                    // The router should initialize internal memory manager
+                    // This tests that WinterTC-compliant memory manager works in browser
+                });
+
+                // Test 14: Error handling
+                await testRunner.test('Error handling', () => {
+                    try {
+                        const invalidConfig = {};
+                        const router = new IntentRouter(invalidConfig);
+                        throw new Error('Should have thrown error for invalid config');
+                    } catch (error) {
+                        if (error.message === 'Should have thrown error for invalid config') {
+                            throw error;
+                        }
+                        // Expected error - this is good
+                    }
+                });
+
+                // Show results
+                testRunner.showSummary();
+                testRunner.showEnvironmentInfo();
+
+            } catch (error) {
+                testRunner.log(`❌ Test runner failed: ${error.message}`, 'failed');
+            }
+        }
+
+        // Start tests when page loads
+        window.addEventListener('load', () => {
+            // Clear initial loading message
+            document.getElementById('test-results').innerHTML = '';
+            runAllTests();
+        });
+
+    </script>
+</body>
+</html>

@@ -35,13 +35,13 @@ export interface ValueMetrics {
   retentionScore: number;
 }
 
-export class BrowserMemoryManager {
+export class MemoryManager {
   private values = new Map<CaMeLValueId, CaMeLValue>();
   private metrics = new Map<CaMeLValueId, ValueMetrics>();
   private accessHistory = new Map<CaMeLValueId, number[]>();
   private config: MemoryManagerConfig;
   private provenanceTracker?: ProvenanceTracker;
-  private gcTimer?: number;
+  private gcTimer?: ReturnType<typeof setInterval>;
   private weakRefs = new WeakMap<object, CaMeLValueId>();
   private compressionWorker?: Worker;
 
@@ -251,7 +251,7 @@ export class BrowserMemoryManager {
 
   cleanup(): void {
     if (this.gcTimer) {
-      clearInterval(this.gcTimer);
+      globalThis.clearInterval(this.gcTimer);
     }
 
     if (this.compressionWorker) {
@@ -341,7 +341,7 @@ export class BrowserMemoryManager {
 
   private calculateValueSize(value: CaMeLValue): number {
     try {
-      return new TextEncoder().encode(JSON.stringify(value)).length;
+      return new globalThis.TextEncoder().encode(JSON.stringify(value)).length;
     } catch {
       return 1000; // fallback estimate
     }
@@ -380,7 +380,7 @@ export class BrowserMemoryManager {
   }
 
   private startGarbageCollection(): void {
-    this.gcTimer = window.setInterval(() => {
+    this.gcTimer = globalThis.setInterval(() => {
       this.performGarbageCollection();
     }, this.config.gcInterval);
   }
@@ -394,14 +394,14 @@ export class BrowserMemoryManager {
   }
 
   private initializeCompressionWorker(): void {
-    if (!this.config.compressionEnabled || typeof Worker === 'undefined') {
+    if (!this.config.compressionEnabled || typeof globalThis.Worker === 'undefined') {
       return;
     }
 
     try {
-      const workerBlob = new Blob([this.getCompressionWorkerCode()], { type: 'application/javascript' });
-      const workerUrl = URL.createObjectURL(workerBlob);
-      this.compressionWorker = new Worker(workerUrl);
+      const workerBlob = new globalThis.Blob([this.getCompressionWorkerCode()], { type: 'application/javascript' });
+      const workerUrl = globalThis.URL.createObjectURL(workerBlob);
+      this.compressionWorker = new globalThis.Worker(workerUrl);
     } catch (error) {
       console.warn('Failed to initialize compression worker:', error);
     }
@@ -440,7 +440,7 @@ export class BrowserMemoryManager {
         reject(new Error('Compression timeout'));
       }, 5000);
 
-      const handler = (e: MessageEvent) => {
+      const handler = (e: any) => {
         if (e.data.id === id) {
           clearTimeout(timeout);
           this.compressionWorker!.removeEventListener('message', handler);

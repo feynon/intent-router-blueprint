@@ -207,7 +207,7 @@ export class IntentExecutor {
 
       this.interpreter.send(inputMessage);
 
-      setTimeout(() => {
+      globalThis.setTimeout(() => {
         cleanup();
         if (!hasError) {
           resolve({ error: 'Tool execution timeout' });

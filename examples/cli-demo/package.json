@@ -1,0 +1,32 @@
+{
+  "name": "intent-router-cli-demo",
+  "version": "0.1.0",
+  "description": "React Ink CLI demo for Intent Router Blueprint",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch & node --watch dist/index.js",
+    "demo": "npm run build && npm run start"
+  },
+  "dependencies": {
+    "intent-router-blueprint": "file:../..",
+    "ink": "^5.0.1",
+    "react": "^18.2.0",
+    "ink-text-input": "^6.0.0",
+    "ink-select-input": "^6.0.0",
+    "ink-spinner": "^5.0.0",
+    "chalk": "^5.3.0",
+    "figures": "^6.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "bin": {
+    "intent-router-demo": "./dist/index.js"
+  },
+  "keywords": ["intent-router", "cli", "demo", "react-ink", "wintertc"]
+}

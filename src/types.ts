@@ -53,6 +53,7 @@ export interface UserContext {
   userId?: string;
   permissions: string[];
   trustLevel: 'low' | 'medium' | 'high';
+  sessionId: string;
 }
 
 export const ExecutionPlanSchema = z.object({
