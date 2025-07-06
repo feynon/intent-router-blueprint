@@ -6,6 +6,7 @@ export interface IntentRouterConfig {
     model: string;
     host?: string;
     port?: number;
+    cors?: OllamaCorsConfig;
   };
   executorModel: {
     endpoint: string;
@@ -101,6 +102,14 @@ export interface ExecutionResult {
   errors: string[];
   securityViolations: string[];
   executionTime: number;
+}
+
+export interface OllamaCorsConfig {
+  enabled: boolean;
+  origin: string | string[];
+  methods: string[];
+  headers: string[];
+  credentials: boolean;
 }
 
 export interface IntentRouterEvents {

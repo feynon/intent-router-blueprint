@@ -14,6 +14,27 @@ export {
   createCustomEndpointConfig
 } from './utils';
 
+// Export CORS configuration utilities
+export {
+  DEFAULT_CORS_CONFIG,
+  PERMISSIVE_CORS_CONFIG,
+  SECURE_CORS_CONFIG,
+  createCorsConfig,
+  generateOllamaEnvironmentConfig,
+  generateOllamaStartupScript,
+  validateCorsConfig
+} from './cors-config';
+
+// Export browser configuration utilities
+export {
+  createBrowserOllamaConfig,
+  createBrowserIntentRouterConfig,
+  getBrowserOllamaEndpoint,
+  generateBrowserSetupInstructions,
+  createProductionBrowserConfig,
+  createDevelopmentBrowserConfig
+} from './browser-config';
+
 // Export CaMeL system components
 export * from './camel';
 
@@ -24,8 +45,13 @@ export type {
   SecurityResult as MainSecurityResult,
   DataProvenance,
   DataCapabilities,
-  IntentRouterEvents
+  IntentRouterEvents,
+  OllamaCorsConfig
 } from './types';
+
+export type {
+  BrowserOllamaConfig
+} from './browser-config';
 
 export type {
   ExecutionPlan,

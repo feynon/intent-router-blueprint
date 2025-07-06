@@ -1,6 +1,7 @@
 import { IntentRouterConfig, UserContext } from './types';
 import { KernelTool } from '@unternet/kernel';
 import { DefaultSecurityPolicies } from './security-policies';
+import { DEFAULT_CORS_CONFIG } from './cors-config';
 
 export function createDefaultConfig(
   executorApiKey: string,
@@ -13,7 +14,8 @@ export function createDefaultConfig(
     plannerModel: {
       model: 'qwen2.5:4b',
       host: plannerHost,
-      port: plannerPort
+      port: plannerPort,
+      cors: DEFAULT_CORS_CONFIG
     },
     executorModel: {
       endpoint: executorEndpoint,

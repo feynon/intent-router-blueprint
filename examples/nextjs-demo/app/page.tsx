@@ -1,10 +1,14 @@
 import IntentInterface from '@/components/IntentInterface';
 import SystemStatus from '@/components/SystemStatus';
+import CorsSetupGuide from '@/components/CorsSetupGuide';
+import OllamaSetupAlert from '@/components/OllamaSetupAlert';
 
 export default function HomePage() {
   return (
     <div className="container mx-auto py-8 space-y-8">
+      <OllamaSetupAlert />
       <SystemStatus />
+      <CorsSetupGuide />
       <IntentInterface />
       
       {/* Architecture Overview */}

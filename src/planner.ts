@@ -1,6 +1,7 @@
 import ollama from 'ollama/browser';
 import { ExecutionPlan, ExecutionPlanSchema, IntentRouterConfig, UserContext } from './types';
 import { KernelTool } from '@unternet/kernel';
+import { DEFAULT_CORS_CONFIG } from './cors-config';
 
 export class IntentPlanner {
   private ollama: typeof ollama;
@@ -74,7 +75,8 @@ Generate a secure execution plan that addresses this intent while following CAME
         format: 'json',
         stream: false
       }, {
-        host: `${this.config.plannerModel.host || 'http://localhost'}:${this.config.plannerModel.port || 11434}`
+        host: `${this.config.plannerModel.host || 'http://localhost'}:${this.config.plannerModel.port || 11434}`,
+        credentials: this.config.plannerModel.cors?.credentials || DEFAULT_CORS_CONFIG.credentials
       });
 
       const planData = JSON.parse(response.response);

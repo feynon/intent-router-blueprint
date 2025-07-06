@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "setup-ollama": "cd ../.. && ./scripts/setup-ollama-models.sh",
+    "start-ollama": "cd ../.. && ./scripts/start-ollama-cors.sh",
+    "verify-ollama": "cd ../.. && ./scripts/verify-ollama-setup.sh"
   },
   "dependencies": {
     "intent-router-blueprint": "file:../../",

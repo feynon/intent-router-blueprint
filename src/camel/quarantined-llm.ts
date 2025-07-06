@@ -15,6 +15,8 @@ import {
   getDependencies
 } from './value';
 import { NotEnoughInformationErrorImpl } from './interpreter';
+import { OllamaCorsConfig } from '../types';
+import { DEFAULT_CORS_CONFIG } from '../cors-config';
 
 export interface QuarantinedLLMConfig {
   host: string;
@@ -22,6 +24,7 @@ export interface QuarantinedLLMConfig {
   model: string;
   timeout: number;
   maxRetries: number;
+  cors?: OllamaCorsConfig;
 }
 
 export class QuarantinedLLM {
@@ -35,7 +38,8 @@ export class QuarantinedLLM {
       port: config.port || 11434,
       model: config.model || 'qwen2.5:4b',
       timeout: config.timeout || 30000,
-      maxRetries: config.maxRetries || 2
+      maxRetries: config.maxRetries || 2,
+      cors: config.cors || DEFAULT_CORS_CONFIG
     };
 
     this.ollama = ollama;

@@ -1,12 +1,14 @@
 # Intent Router Blueprint - Next.js Demo
 
-A comprehensive demonstration of the Intent Router Blueprint SDK showcasing secure dual-LLM intent routing with CAMEL architecture.
+A comprehensive demonstration of the Intent Router Blueprint SDK showcasing secure dual-LLM intent routing with CAMEL architecture and **Ollama CORS support** for browser compatibility.
 
 ## Features
 
 - **Interactive Intent Interface**: Natural language input for complex tasks
 - **Dual-LLM Architecture**: Local planner + remote executor for maximum security
-- **Real-time System Status**: Monitor model availability and system health
+- **Browser-Compatible Ollama**: CORS-enabled local model support
+- **Real-time System Status**: Monitor Ollama connection and model availability
+- **CORS Setup Assistant**: Built-in guide for Ollama CORS configuration
 - **Security Visualization**: See execution plans and security assessments
 - **Multiple Examples**: Pre-built examples to explore different use cases
 
@@ -16,15 +18,19 @@ A comprehensive demonstration of the Intent Router Blueprint SDK showcasing secu
 
 1. **Install Ollama** (for local planning):
    ```bash
-   # macOS
+   # macOS with Homebrew
    brew install ollama
    
-   # Or download from https://ollama.ai
+   # Linux/macOS with install script
+   curl -fsSL https://ollama.ai/install.sh | sh
    ```
 
-2. **Pull the required model**:
+2. **Setup Ollama with CORS** (required for browser compatibility):
    ```bash
-   ollama pull qwen2.5:4b
+   # Automated setup (recommended)
+   npm run setup-ollama    # Pull models and verify installation
+   npm run start-ollama    # Start Ollama with CORS enabled
+   npm run verify-ollama   # Verify everything is working
    ```
 
 3. **Get an API key** from your preferred provider:
@@ -51,31 +57,39 @@ A comprehensive demonstration of the Intent Router Blueprint SDK showcasing secu
    
    # OR for Anthropic
    ANTHROPIC_API_KEY=your_anthropic_api_key_here
-   
-   # Optional: Custom Ollama host
-   OLLAMA_HOST=http://localhost:11434
    ```
 
-3. **Start the development server**:
+3. **Start Ollama with CORS** (in a separate terminal):
+   ```bash
+   npm run start-ollama
+   ```
+
+4. **Start the development server**:
    ```bash
    npm run dev
    ```
 
-4. **Open your browser** to `http://localhost:3000`
+5. **Open your browser** to `http://localhost:3000`
 
 ## Demo Capabilities
 
-### 1. Intent Routing
+### 1. Ollama CORS Integration
+- **Real-time Ollama Status**: Monitor connection and available models
+- **CORS Setup Guide**: Interactive setup assistant with copy-paste commands
+- **Browser Compatibility**: Direct browser-to-Ollama communication
+- **Model Management**: Check required models and installation status
+
+### 2. Intent Routing
 - Enter natural language commands
 - See how the system plans and executes complex tasks
 - Observe security policies in action
 
-### 2. Security Features
+### 3. Security Features
 - **Prompt Injection Protection**: Try malicious inputs to see security policies block them
 - **Data Flow Control**: Observe how sensitive data is handled
 - **Permission-based Access**: Test different permission levels
 
-### 3. System Monitoring
+### 4. System Monitoring
 - Real-time status of planner and executor models
 - Available tools and their descriptions
 - System health monitoring
@@ -109,8 +123,9 @@ Search for weather in San Francisco and create a travel recommendation
 - Dual-LLM design prevents prompt injection attacks
 - Built-in security policies protect sensitive operations
 
-### 🏠 Local Planning
-- Planner runs locally via Ollama
+### 🌐 Browser-Compatible Local Planning
+- Planner runs locally via Ollama with CORS support
+- Direct browser-to-Ollama communication
 - User data stays private during planning
 - No sensitive information sent to remote services
 
@@ -124,7 +139,18 @@ Search for weather in San Francisco and create a travel recommendation
 - Fine-grained permission controls
 - Real-time security violation detection
 
+### 🔧 CORS Configuration
+- Automated Ollama CORS setup scripts
+- Real-time connection monitoring
+- Interactive setup guide with troubleshooting
+
 ## Configuration Options
+
+### Ollama CORS Settings
+- **Automatic Configuration**: Uses development-friendly CORS settings
+- **Allowed Origins**: `http://localhost:3000`, `http://localhost:8080`
+- **Supported Methods**: `GET`, `POST`, `PUT`, `DELETE`, `OPTIONS`
+- **Custom Configuration**: Available via browser configuration utilities
 
 ### User Context
 - **User ID**: Identify different users
@@ -205,26 +231,53 @@ config.securityPolicies.push(myPolicy);
 
 ## Troubleshooting
 
-### Common Issues
+### CORS-Related Issues
+
+1. **"Ollama Disconnected" in the demo**:
+   - Check if Ollama is running: `pgrep -f "ollama serve"`
+   - Restart with CORS: `npm run start-ollama`
+   - Verify setup: `npm run verify-ollama`
+
+2. **CORS policy blocked errors in browser console**:
+   - Ensure OLLAMA_ORIGINS includes `http://localhost:3000`
+   - Restart Ollama after setting environment variables
+   - Use the automated CORS script: `npm run start-ollama`
+
+3. **Model not found errors**:
+   - Pull the required model: `ollama pull qwen2.5:4b`
+   - Check available models: `ollama list`
+   - Use the setup script: `npm run setup-ollama`
+
+### General Issues
 
 1. **"No API key found" error**:
    - Make sure you've set either `OPENAI_API_KEY` or `ANTHROPIC_API_KEY` in `.env.local`
 
-2. **Planner model not available**:
-   - Ensure Ollama is running: `ollama serve`
-   - Check that the model is pulled: `ollama pull qwen2.5:4b`
-
-3. **Build errors**:
+2. **Build errors**:
    - Make sure the parent Intent Router Blueprint package is built:
      ```bash
      cd ../.. && npm run build
      ```
 
-4. **TypeScript errors**:
+3. **TypeScript errors**:
    - Install the Intent Router Blueprint package:
      ```bash
      cd ../.. && npm install
      ```
+
+### Quick Diagnostics
+
+```bash
+# Check Ollama status
+curl http://localhost:11434/api/tags
+
+# Verify CORS configuration
+npm run verify-ollama
+
+# Test browser compatibility
+# (Open browser console and run)
+fetch('http://localhost:11434/api/tags').then(r => r.json()).then(console.log)
+```
 
 ## Contributing
 
