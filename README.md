@@ -43,7 +43,7 @@ A hybrid LLM intent routing system for secure agent orchestration that operates 
 ## Overview
 
 This package extends the [Unternet Kernel](https://github.com/unternet-co/kernel) runtime to implement a secure intent routing system that separates planning from execution to prevent prompt injection attacks. It integrates the **CAMEL security model** from the Google DeepMind paper ["Defeating Prompt Injections by Design"](https://arxiv.org/abs/2503.18813), providing a dual-LLM architecture for secure agent orchestration. The design also incorporates insights from NVIDIA Research’s [“Small Language Models are the Future of Agentic AI”](https://arxiv.org/abs/2506.02153), adopting a heterogeneous compute strategy that leverages small and large LLMs collaboratively for agentic intelligence. The system is fully [WinterTC](https://wintertc.org/) compliant, ensuring unified operation across both browser and Node.js environments.
-z
+
 
 ## Architecture
 
