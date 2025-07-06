@@ -6,54 +6,44 @@ A hybrid LLM intent routing system for secure agent orchestration that operates 
 
 ## Table of Contents
 
-- [Overview](#overview)
-  - [Key Principles](#key-principles)
-- [Architecture](#architecture)
-- [WinterTC Compliance](#wintertc-compliance)
-  - [Cross-Platform APIs Used](#cross-platform-apis-used)
-  - [Environment Detection](#environment-detection)
-  - [Memory Management](#memory-management)
-- [Installation](#installation)
-- [Prerequisites](#prerequisites)
-- [Quick Start](#quick-start)
-- [Provider Configuration](#provider-configuration)
-  - [OpenAI](#openai)
-  - [Anthropic](#anthropic)
-  - [Custom Endpoint](#custom-endpoint)
-  - [Manual Configuration](#manual-configuration)
-- [Next.js Integration](#nextjs-integration)
-  - [Setup Router](#1-setup-router)
-  - [API Route](#2-api-route)
-  - [React Hook](#3-react-hook)
-  - [UI Component](#4-ui-component)
-- [Security Features](#security-features)
-  - [Built-in Security Policies](#built-in-security-policies)
-  - [Custom Security Policies](#custom-security-policies)
-- [Custom Tools](#custom-tools)
-- [Environment Variables](#environment-variables)
-  - [OpenAI](#openai-1)
-  - [Anthropic](#anthropic-1)
-  - [Custom Provider](#custom-provider)
-- [API Reference](#api-reference)
-  - [IntentRouter](#intentrouter)
-  - [Configuration](#configuration)
-- [Demo Applications](#demo-applications)
-  - [Browser Demo (Next.js)](#browser-demo-nextjs)
-  - [Node.js CLI Demo (React Ink)](#nodejs-cli-demo-react-ink)
-- [Development](#development)
-- [License](#license)
+- [Intent Router Blueprint](#intent-router-blueprint)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Architecture](#architecture)
+  - [Installation](#installation)
+  - [Prerequisites](#prerequisites)
+  - [Quick Start](#quick-start)
+  - [Provider Configuration](#provider-configuration)
+    - [OpenAI](#openai)
+    - [Anthropic](#anthropic)
+    - [Custom Endpoint](#custom-endpoint)
+    - [Manual Configuration](#manual-configuration)
+  - [Next.js Integration](#nextjs-integration)
+    - [1. Setup Router](#1-setup-router)
+    - [2. API Route](#2-api-route)
+    - [3. React Hook](#3-react-hook)
+    - [4. UI Component](#4-ui-component)
+  - [Security Features](#security-features)
+    - [Built-in Security Policies](#built-in-security-policies)
+    - [Custom Security Policies](#custom-security-policies)
+  - [Custom Tools](#custom-tools)
+  - [Environment Variables](#environment-variables)
+    - [OpenAI](#openai-1)
+    - [Anthropic](#anthropic-1)
+    - [Custom Provider](#custom-provider)
+  - [API Reference](#api-reference)
+    - [IntentRouter](#intentrouter)
+    - [Configuration](#configuration)
+  - [Demo Applications](#demo-applications)
+    - [Browser Demo (Next.js)](#browser-demo-nextjs)
+    - [Node.js CLI Demo (React Ink)](#nodejs-cli-demo-react-ink)
+  - [Development](#development)
+  - [License](#license)
 
 ## Overview
 
-This package extends the **Unternet Kernel** to implement a secure intent routing system that separates planning from execution to prevent prompt injection attacks. It integrates the **CAMEL security model** from the Google DeepMind paper ["Defeating Prompt Injections by Design"](https://arxiv.org/abs/2503.18813) into the Unternet framework, providing a dual-LLM architecture for secure agent orchestration. The system is fully **WinterTC-compliant**, ensuring unified operation across both browser and Node.js environments.
-
-### Key Principles
-
-- **Coordination must be separate from execution**
-- **Local privacy**: User data stays local during planning
-- **Structured execution**: Only sanitized plans reach the executor
-- **Capability-based security**: Fine-grained control over data flows
-- **WinterTC compliance**: Universal compatibility across browser and Node.js environments
+This package extends the [Unternet Kernel](https://github.com/unternet-co/kernel runtime) to implement a secure intent routing system that separates planning from execution to prevent prompt injection attacks. It integrates the **CAMEL security model** from the Google DeepMind paper ["Defeating Prompt Injections by Design"](https://arxiv.org/abs/2503.18813), providing a dual-LLM architecture for secure agent orchestration. The design also incorporates insights from NVIDIA Research’s [“Small Language Models are the Future of Agentic AI”](https://arxiv.org/abs/2506.02153), adopting a heterogeneous compute strategy that leverages small and large LLMs collaboratively for agentic intelligence. The system is fully **WinterTC-compliant**, ensuring unified operation across both browser and Node.js environments.
+z
 
 ## Architecture
 
@@ -61,31 +51,7 @@ This package extends the **Unternet Kernel** to implement a secure intent routin
 - **Executor LLM**: Runs remotely via OpenAI-compatible API - executes structured plans without raw user input
 - **Memory Manager**: WinterTC-compliant memory management that works in both environments
 - **Cross-platform APIs**: Uses globalThis for timers, workers, and other environment-specific features
-
-## WinterTC Compliance
-
-This toolkit is fully **WinterTC-compliant**, ensuring it operates seamlessly in both browser and Node.js environments. The following changes have been made to achieve cross-platform compatibility:
-
-### Cross-Platform APIs Used
-- `globalThis.setInterval()` / `globalThis.clearInterval()` - Universal timer APIs
-- `globalThis.setTimeout()` - Universal timeout API
-- `globalThis.TextEncoder()` - Universal text encoding
-- `globalThis.Worker` - Universal worker support (where available)
-- `globalThis.Blob` - Universal blob API
-- `globalThis.URL` - Universal URL API
-
-### Environment Detection
-The toolkit automatically detects the runtime environment and uses appropriate APIs:
-- **Browser**: Uses Web Workers, DOM APIs, and browser-specific features
-- **Node.js**: Uses Node.js worker_threads, filesystem APIs, and Node.js-specific features
-- **Universal**: Uses WinterTC minimum common API for shared functionality
-
-### Memory Management
-The `MemoryManager` class provides WinterTC-compliant memory management:
-- Cross-platform timer management
-- Universal worker thread support
-- Environment-agnostic text encoding
-- Unified event handling
+- **CAMEL Security Model**: Implements control and data flow security with strict data quarantine policies
 
 ## Installation
 
