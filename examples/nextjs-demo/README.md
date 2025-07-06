@@ -2,6 +2,38 @@
 
 A comprehensive demonstration of the Intent Router Blueprint SDK showcasing secure dual-LLM intent routing with CAMEL architecture and **Ollama CORS support** for browser compatibility.
 
+## Table of Contents
+
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Demo Capabilities](#demo-capabilities)
+  - [1. Ollama CORS Integration](#1-ollama-cors-integration)
+  - [2. Intent Routing](#2-intent-routing)
+  - [3. Security Features](#3-security-features)
+  - [4. System Monitoring](#4-system-monitoring)
+- [Example Use Cases](#example-use-cases)
+  - [1. Information Gathering & Communication](#1-information-gathering--communication)
+  - [2. Data Processing](#2-data-processing)
+  - [3. Mathematical Operations](#3-mathematical-operations)
+  - [4. Multi-step Workflows](#4-multi-step-workflows)
+- [Architecture Highlights](#architecture-highlights)
+- [Configuration Options](#configuration-options)
+  - [Ollama CORS Settings](#ollama-cors-settings)
+  - [User Context](#user-context)
+  - [Available Tools](#available-tools)
+- [Development](#development)
+  - [Project Structure](#project-structure)
+  - [Adding Custom Tools](#adding-custom-tools)
+  - [Adding Custom Security Policies](#adding-custom-security-policies)
+- [Troubleshooting](#troubleshooting)
+  - [CORS-Related Issues](#cors-related-issues)
+  - [General Issues](#general-issues)
+  - [Quick Diagnostics](#quick-diagnostics)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Features
 
 - **Interactive Intent Interface**: Natural language input for complex tasks

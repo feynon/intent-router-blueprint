@@ -4,6 +4,45 @@
 
 A hybrid LLM intent routing system for secure agent orchestration that operates seamlessly.
 
+## Table of Contents
+
+- [Overview](#overview)
+  - [Key Principles](#key-principles)
+- [Architecture](#architecture)
+- [WinterTC Compliance](#wintertc-compliance)
+  - [Cross-Platform APIs Used](#cross-platform-apis-used)
+  - [Environment Detection](#environment-detection)
+  - [Memory Management](#memory-management)
+- [Installation](#installation)
+- [Prerequisites](#prerequisites)
+- [Quick Start](#quick-start)
+- [Provider Configuration](#provider-configuration)
+  - [OpenAI](#openai)
+  - [Anthropic](#anthropic)
+  - [Custom Endpoint](#custom-endpoint)
+  - [Manual Configuration](#manual-configuration)
+- [Next.js Integration](#nextjs-integration)
+  - [Setup Router](#1-setup-router)
+  - [API Route](#2-api-route)
+  - [React Hook](#3-react-hook)
+  - [UI Component](#4-ui-component)
+- [Security Features](#security-features)
+  - [Built-in Security Policies](#built-in-security-policies)
+  - [Custom Security Policies](#custom-security-policies)
+- [Custom Tools](#custom-tools)
+- [Environment Variables](#environment-variables)
+  - [OpenAI](#openai-1)
+  - [Anthropic](#anthropic-1)
+  - [Custom Provider](#custom-provider)
+- [API Reference](#api-reference)
+  - [IntentRouter](#intentrouter)
+  - [Configuration](#configuration)
+- [Demo Applications](#demo-applications)
+  - [Browser Demo (Next.js)](#browser-demo-nextjs)
+  - [Node.js CLI Demo (React Ink)](#nodejs-cli-demo-react-ink)
+- [Development](#development)
+- [License](#license)
+
 ## Overview
 
 This package extends the **Unternet Kernel** to implement a secure intent routing system that separates planning from execution to prevent prompt injection attacks. It integrates the **CAMEL security model** from the Google DeepMind paper ["Defeating Prompt Injections by Design"](https://arxiv.org/abs/2503.18813) into the Unternet framework, providing a dual-LLM architecture for secure agent orchestration. The system is fully **WinterTC-compliant**, ensuring unified operation across both browser and Node.js environments.

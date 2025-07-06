@@ -2,6 +2,33 @@
 
 A React Ink-based command-line interface demo showcasing the **WinterTC-compliant** Intent Router Blueprint.
 
+## Table of Contents
+
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Installation & Setup](#installation--setup)
+- [Usage](#usage)
+  - [1. Welcome Screen](#1-welcome-screen)
+  - [2. Setup Configuration](#2-setup-configuration)
+  - [3. Main Interface](#3-main-interface)
+  - [4. Results Display](#4-results-display)
+- [Example Intents](#example-intents)
+- [WinterTC Compliance Features](#wintertc-compliance-features)
+  - [Cross-Platform APIs](#cross-platform-apis)
+  - [Environment Detection](#environment-detection)
+  - [Memory Management](#memory-management)
+- [Architecture Visualization](#architecture-visualization)
+- [Keyboard Shortcuts](#keyboard-shortcuts)
+- [Troubleshooting](#troubleshooting)
+  - [Ollama Connection Issues](#ollama-connection-issues)
+  - [API Key Issues](#api-key-issues)
+  - [Build Issues](#build-issues)
+- [Development](#development)
+- [Technical Details](#technical-details)
+  - [Dependencies](#dependencies)
+  - [WinterTC Implementation](#wintertc-implementation)
+- [Contributing](#contributing)
+
 ## Features
 
 - **Interactive CLI** built with React Ink
