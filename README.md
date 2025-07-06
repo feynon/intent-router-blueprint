@@ -2,7 +2,7 @@
 
 ⚠️ **DISCLAIMER**: This is experimental research software in active development - may not function correctly and is not suitable for production use.
 
-A dual-LLM intent routing system implementing the CAMEL security architecture for secure agent orchestration.
+A dual-LLM intent routing system for secure agent orchestration.
 
 ## Overview
 
@@ -365,11 +365,11 @@ npm run dev
 ```
 
 The demo showcases:
-- **🎯 Interactive Intent Interface**: Natural language input with real-time processing
-- **🔒 Security Visualization**: See execution plans and security assessments
-- **📊 System Monitoring**: Real-time status of planner and executor models
-- **🛠️ Tool Integration**: Explore available tools and their capabilities
-- **⚙️ Configuration Options**: Adjust user permissions and trust levels
+- ** Interactive Intent Interface**: Natural language input with real-time processing
+- ** Security Visualization**: See execution plans and security assessments
+- ** System Monitoring**: Real-time status of planner and executor models
+- ** Tool Integration**: Explore available tools and their capabilities
+- ** Configuration Options**: Adjust user permissions and trust levels
 
 ### Demo Features
 - Pre-built examples for common use cases
@@ -391,4 +391,4 @@ npm run typecheck
 
 ## License
 
-MIT
+This project is licensed under the MIT License – © Ankesh Bharti
